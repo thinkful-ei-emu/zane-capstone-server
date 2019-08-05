@@ -6,6 +6,8 @@ const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const uuid = require('uuid/v4');
 const UsersRouter=require('./users/users-router');
+const authRouter= require('./auth/auth-router');
+const inventoriesRouter = require('./Inventories/inventories-router');
 
 const app = express();
 
@@ -15,7 +17,10 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use('/api/auth',authRouter)
 app.use('/api/users',UsersRouter)
+app.use('/api/inventory',inventoriesRouter)
+
 
 app.get('/', (req, res) => {
   console.log('Hello World');
