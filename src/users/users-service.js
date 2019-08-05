@@ -32,16 +32,24 @@ const UsersService = {
     return db
       .insert(newUser)
       .into('users')
-      // .returning('*')
-      // .then(([user]) => user);
+       .returning('*')
+       .then(([user]) => user);
+  },
+  hasUserWithSameEmail(db,user_email){
+    return db('users')
+      .where({user_email})
+      .first()
+      .then(email=>!!email);
   },
   serializeUser(user){
     return{
       id:user.id,
+      first_name:xss(user.first_name),
+      last_name:xss(user.last_name),
       user_name:xss(user.user_name),
       password:xss(user.password),
-      user_email:xss(user.user_email)
-    }
+      user_email:xss(user.user_email),
+    };
   }
 };
 
