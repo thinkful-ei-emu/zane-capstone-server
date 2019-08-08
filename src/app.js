@@ -22,10 +22,8 @@ app.use('/api/users',UsersRouter)
 app.use('/api/inventory',inventoriesRouter)
 
 
-app.get('/', (req, res) => {
-  console.log('Hello World');
-  res.send('Hello World');
-});
+
+
 
 
 app.use(function errorHandler(error, req, res, next) {
