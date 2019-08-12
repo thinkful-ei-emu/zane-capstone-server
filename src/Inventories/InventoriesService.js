@@ -36,7 +36,7 @@ insertItem(db, newItem) {
 getItemsFromTable(db,id){
   return db
   .from('items')
-  .select('id','item_name','description','quantity','unit_type','price')
+  .select('id','item_name','description','quantity','unit_type','price','location')
   .where({'user_id':id})
 },
 deleteItemFromTable(db,id){
@@ -46,11 +46,11 @@ deleteItemFromTable(db,id){
   .where({'id':id})
 },
 
-UpdateItem(db,id,name,description,quantity,unit_type,price){
+UpdateItem(db,id,name,description,quantity,unit_type,price,location){
   return db
   .from('items')
   .update({'item_name':name,
-'description':description,'quantity':quantity,'unit_type':unit_type,'price':price})
+'description':description,'quantity':quantity,'unit_type':unit_type,'price':price, 'location':location})
   .where({'id':id})
 },
 getSingleItem(db,id){

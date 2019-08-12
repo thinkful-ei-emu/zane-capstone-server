@@ -4,7 +4,8 @@ create table items (
   description text not null,
   quantity integer not null,
   unit_type text not null,
-  price integer not null,
+  price NUMERIC (5,2) not null,
+  location text not null,
   user_id integer REFERENCES users(id) on DELETE CASCADE
 
 );

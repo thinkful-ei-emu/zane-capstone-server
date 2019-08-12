@@ -14,8 +14,8 @@ inventoriesRouter
   
   inventoriesRouter
   .post('/',jsonBodyParser, (req, res, next) => {
-    const { item_name,description,quantity,unit_type,price } = req.body;
-    const newItem = { item_name,description,quantity,unit_type,price, };
+    const { item_name,description,quantity,unit_type,price,location } = req.body;
+    const newItem = { item_name,description,quantity,unit_type,price,location };
 
     for (const [key, value] of Object.entries(newItem))
       if (value == null)
@@ -71,8 +71,8 @@ inventoriesRouter
   })
 inventoriesRouter
   .put('/:id',(req,res)=>{
-    const { item_name,description,quantity,unit_type,price } = req.body;
-    const newItem = { item_name,description,quantity,unit_type,price, };
+    const { item_name,description,quantity,unit_type,price,location } = req.body;
+    const newItem = { item_name,description,quantity,unit_type,price,location };
 
     for (const [key, value] of Object.entries(newItem))
       if (value == null)
@@ -86,7 +86,8 @@ inventoriesRouter
       req.body.description,
       req.body.quantity,
       req.body.unit_type,
-      req.body.price
+      req.body.price,
+      req.body.location
       
     )
     .then(items=>{
