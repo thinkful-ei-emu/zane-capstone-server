@@ -33,7 +33,7 @@ inventoriesRouter
         res
           .status(201)
           .location('/:itemId')
-          .json(item);
+          .json(InventoriesService.serializeItem(item));
       })
       .catch(next);
   })
@@ -94,7 +94,7 @@ inventoriesRouter
      return res
       .status(200)
       .location('/:itemid')
-      .json(items)
+      .json(InventoriesService.serializeItem(items))
     })
   })
 
