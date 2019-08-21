@@ -4,12 +4,20 @@ Server: https://zap-app.zanekuehn.now.sh
 ## Summary
 This Server is for the Zap app. An inventory app that allows users to keep track of a multitude of items with a few options for each.
 
-If you navigate to the base URL there will be a brief description about the server endpoints.
+
 
  ## API Documentation
 There are two top level endpoints:
 
 /api/inventory
+
+/api/users
+
+Users Supports the POST method for posting users to the database.
+
+For example:
+
+POST /api/users
 
 Inventory supports GET, POST, PATCH and DELETE requests. For PATCH and DELETE requests you must supply the respective id in the endpoint's path.
 
@@ -19,9 +27,10 @@ GET /api/inventory
 
 
 POST /api/inventory
+
 PATCH /api/inventory/:itemid
 
-DELETE /inventory/:item
+DELETE /inventory/:itemid
 
 ## Technologies
 ### Front-end: 
