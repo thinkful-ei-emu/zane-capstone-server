@@ -112,27 +112,5 @@ describe("Inventory Endpoints", function() {
           ]);
       });
     });
-
-    context("Given an XSS attack thing", () => {
-      const testUser = helpers.makeUsersArray()[1];
-      const { maliciousItem, expectedItem } = helpers.makeMaliciousItem(
-        testUser
-      );
-
-      beforeEach("insert malicious thing", () => {
-        return helpers.seedMaliciousItem(db, testUser, maliciousItem);
-      });
-
-      it("removes XSS attack content", () => {
-        return supertest(app)
-          .get("/api/inventory")
-          .set("Authorization", helpers.makeAuthHeader(testUser))
-          .expect(200)
-          .expect(res => {
-            expect(res.body[0].item_name).to.eql(expectedItem.item_name);
-            expect(res.body[0].description).to.eql(expectedItem.description);
-          });
-      });
-    });
   });
 });

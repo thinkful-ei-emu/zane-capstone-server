@@ -24,9 +24,27 @@ PATCH /api/inventory/:itemid
 DELETE /inventory/:item
 
 ## Technologies
-Front-end: React, HTML, CSS, Javascript, testing with Enzyme
+### Front-end: 
+React, 
 
-API: Node.js, Express, PostgreSQL, Knex, testing with Mocha
+HTML, 
+
+CSS, 
+
+Javascript, 
+
+
+
+### BackEnd: 
+Node.js, 
+
+Express, 
+
+PostgreSQL, 
+
+Knex, 
+
+
 
 ## Scripts
 Start the application npm start
