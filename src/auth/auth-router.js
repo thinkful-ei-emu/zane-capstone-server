@@ -1,52 +1,50 @@
-const express = require('express');
+const express = require("express");
 
 const authRouter = express.Router();
-const jsonBodyParser= express.json();
-const AuthService=require('.//auth-service');
-const {requireAuth}=require('../middleware/jwt-auth');
+const jsonBodyParser = express.json();
+const AuthService = require(".//auth-service");
+const { requireAuth } = require("../middleware/jwt-auth");
 
-authRouter
-  .post('/login', jsonBodyParser, (req, res, next) => {
-    const { user_name, password } = req.body;
-    const loginUser = { user_name, password };
-  
-    for (const [key, value] of Object.entries(loginUser))
-      if (value == null)
+authRouter.post("/login", jsonBodyParser, (req, res, next) => {
+  const { user_name, password } = req.body;
+  const loginUser = { user_name, password };
+
+  for (const [key, value] of Object.entries(loginUser))
+    if (value == null)
+      return res.status(400).json({
+        error: `Missing '${key}' in request body`
+      });
+
+  AuthService.getUserWithUserName(req.app.get("db"), loginUser.user_name)
+    .then(dbUser => {
+      if (!dbUser)
         return res.status(400).json({
-          error: `Missing '${key}' in request body`
+          error: "Incorrect User Name or Password"
         });
 
-    AuthService.getUserWithUserName(
-      req.app.get('db'),
-      loginUser.user_name
-    )
-      .then(dbUser=>{
-        if(!dbUser)
-          return res.status(400).json({
-            error:'Incorrect User Name or Password'
-          });
-      
-        return AuthService.comparePasswords(loginUser.password,dbUser.password)
-          .then(compareMatch=>{
-            if(!compareMatch)
-              return res.status(400).json({error:'Incorrect User Name or Password'
-              });
-            const sub = dbUser.user_name;
-            const payload = { user_id: dbUser.id };
-            res.send({
-              authToken: AuthService.createJwt(sub, payload),
-            });
-          });
-        
-      })
-      .catch(next);
-  });
+      return AuthService.comparePasswords(
+        loginUser.password,
+        dbUser.password
+      ).then(compareMatch => {
+        if (!compareMatch)
+          return res
+            .status(400)
+            .json({ error: "Incorrect User Name or Password" });
+        const sub = dbUser.user_name;
+        const payload = { user_id: dbUser.id };
+        res.send({
+          authToken: AuthService.createJwt(sub, payload)
+        });
+      });
+    })
+    .catch(next);
+});
 
-authRouter.post('/refresh', requireAuth, (req, res) => {
+authRouter.post("/refresh", requireAuth, (req, res) => {
   const sub = req.user.user_name;
   const payload = { user_id: req.user.id };
   res.send({
-    authToken: AuthService.createJwt(sub, payload),
+    authToken: AuthService.createJwt(sub, payload)
   });
 });
 
